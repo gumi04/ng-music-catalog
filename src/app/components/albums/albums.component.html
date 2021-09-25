@@ -1,0 +1,251 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col" style="text-align: right;margin-top: 10px;">
+      <a class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregrar Album</a>
+      <a class="btn btn-outline-danger btn-sm" style="margin-left: 5px;" (click)="deletedAllAlbums()">Eliminar Albums</a>
+    </div>
+    <form class="row g-3 needs-validation" novalidate (ngSubmit)="updateCompanyMassive(companyAlbumForm)"
+      [formGroup]="companyAlbumForm">
+      <div class="col-lg-3 col-sm-3 col-mb-3 col-0">
+      </div>
+      <div class="col-lg-3 col-sm-6 col-mb-3 col-6">
+        <input type="text" class="form-control " id="validationCustom01" required placeholder="Compañia"
+          formControlName="companyName" ngModel>
+        <div
+          *ngIf="formAltaControls.companyName.invalid && formAltaControls.companyName.errors && (formAltaControls.companyName.dirty || formAltaControls.companyName.touched)"
+          class="alert alert-danger form-danger" role="alert">
+          <small *ngIf="formAltaControls.companyName.errors.required ">
+            Required field!
+          </small>
+        </div>
+
+      </div>
+      <div class="col-lg-3 col-sm-3 col-mb-3 col-3">
+        <button class="btn btn-info" [disabled]="companyAlbumForm.invalid" type="submit">Actualizar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="margin-top: 10px;">
+    <div class="col" *ngFor="let album of albums,index as i">
+      <div class="card shadow-sm">
+        <div style="display: inline-block;position: relative;">
+          <img class="bd-placeholder-img card-img-top" width="100%" height="225" [src]="album.image" role="img"
+            aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <button type="button" class="btn-danger" aria-label="Close" style="position: absolute;right: 0px;" (click)="deleteAlbum(album.albumId)">X</button>
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{album.title}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{album.singer}}</h6>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Genero {{album.gender}}</li>
+            <li class="list-group-item">Disquera {{album.company}}</li>
+          </ul>
+          <div class="d-flex justify-content-between align-items-center" style="text-align: right;">
+            <div class="btn-group">
+              <div class="col" style="text-align: right;">
+                <button type="button" class="btn btn-sm btn-outline-primary">Detalles</button>
+                <button type="button"  (click)="getAlbum(album.albumId)" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                  data-bs-target="#modaledit">Editar</button>
+              </div>
+            </div>
+          </div>
+          <div class="col" style="text-align: center; margin-top: 5px;">
+            <small class="text-muted ">Creacion {{album.launch | date:'MM/dd/yyyy'}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar Album</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="cleanFormAlbum()"></button>
+        </div>
+        <div class="modal-body">
+          <form novalidate (ngSubmit)="create(albumForm)" [formGroup]="albumForm">
+            <div class="row">
+              <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+                <label for="exampleInputEmail1" class="form-label">Titulo</label>
+                <input type="text" class="form-control" id="title" formControlName="title">
+                <div
+                  *ngIf="formAlbum.title.invalid && formAlbum.title.errors && (formAlbum.title.dirty || formAlbum.title.touched)"
+                  class="alert alert-danger form-danger" role="alert">
+                  <small *ngIf="formAlbum.title.errors.required ">
+                    Required field!
+                  </small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+                <label for="exampleInputEmail1" class="form-label">Cantante</label>
+                <input type="text" class="form-control" id="singer" formControlName="singer">
+                <div
+                  *ngIf="formAlbum.singer.invalid && formAlbum.singer.errors && (formAlbum.singer.dirty || formAlbum.singer.touched)"
+                  class="alert alert-danger form-danger" role="alert">
+                  <small *ngIf="formAlbum.singer.errors.required ">
+                    Required field!
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+                <label for="exampleInputEmail1" class="form-label">Disquera</label>
+                <input type="text" class="form-control" id="company" formControlName="company">
+                <div
+                  *ngIf="formAlbum.company.invalid && formAlbum.company.errors && (formAlbum.company.dirty || formAlbum.company.touched)"
+                  class="alert alert-danger form-danger" role="alert">
+                  <small *ngIf="formAlbum.company.errors.required ">
+                    Required field!
+                  </small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+                <label for="exampleInputEmail1" class="form-label">Genero</label>
+                <input type="text" class="form-control" id="gender" formControlName="gender">
+                <div
+                  *ngIf="formAlbum.gender.invalid && formAlbum.gender.errors && (formAlbum.gender.dirty || formAlbum.gender.touched)"
+                  class="alert alert-danger form-danger" role="alert">
+                  <small *ngIf="formAlbum.gender.errors.required ">
+                    Required field!
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="exampleInputEmail1" class="form-label">Año de Lanzamiento</label>
+              <input type="date" class="form-control" id="launch" formControlName="launch">
+              <div
+                *ngIf="formAlbum.launch.invalid && formAlbum.launch.errors && (formAlbum.launch.dirty || formAlbum.launch.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formAlbum.launch.errors.required ">
+                  Required field!
+                </small>
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="exampleInputEmail1" class="form-label">Covertura</label>
+              <input type="text" class="form-control" id="image" formControlName="image">
+              <div
+                *ngIf="formAlbum.image.invalid && formAlbum.image.errors && (formAlbum.image.dirty || formAlbum.image.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formAlbum.image.errors.required ">
+                  Required field!
+                </small>
+              </div>
+            </div>
+            <div style="text-align: right;margin-top: 5px;">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                (click)="cleanFormAlbum()">Close</button>
+              <button type="submit" class="btn btn-primary" style="margin-left: 10px;"
+                data-bs-dismiss="modal">Submit</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal-->
+  <div class="modal fade" id="modaledit" tabindex="-1" aria-labelledby="modaledit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Editar Album</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form novalidate (ngSubmit)="update(albumForm)" [formGroup]="albumForm">
+            <div class="row">
+              <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+                <label for="exampleInputEmail1" class="form-label">Titulo</label>
+                <input type="text" class="form-control" id="title" formControlName="title">
+                <div
+                  *ngIf="formAlbum.title.invalid && formAlbum.title.errors && (formAlbum.title.dirty || formAlbum.title.touched)"
+                  class="alert alert-danger form-danger" role="alert">
+                  <small *ngIf="formAlbum.title.errors.required ">
+                    Required field!
+                  </small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+                <label for="exampleInputEmail1" class="form-label">Cantante</label>
+                <input type="text" class="form-control" id="singer" formControlName="singer">
+                <div
+                  *ngIf="formAlbum.singer.invalid && formAlbum.singer.errors && (formAlbum.singer.dirty || formAlbum.singer.touched)"
+                  class="alert alert-danger form-danger" role="alert">
+                  <small *ngIf="formAlbum.singer.errors.required ">
+                    Required field!
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+                <label for="exampleInputEmail1" class="form-label">Disquera</label>
+                <input type="text" class="form-control" id="company" formControlName="company">
+                <div
+                  *ngIf="formAlbum.company.invalid && formAlbum.company.errors && (formAlbum.company.dirty || formAlbum.company.touched)"
+                  class="alert alert-danger form-danger" role="alert">
+                  <small *ngIf="formAlbum.company.errors.required ">
+                    Required field!
+                  </small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+                <label for="exampleInputEmail1" class="form-label">Genero</label>
+                <input type="text" class="form-control" id="gender" formControlName="gender">
+                <div
+                  *ngIf="formAlbum.gender.invalid && formAlbum.gender.errors && (formAlbum.gender.dirty || formAlbum.gender.touched)"
+                  class="alert alert-danger form-danger" role="alert">
+                  <small *ngIf="formAlbum.gender.errors.required ">
+                    Required field!
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="exampleInputEmail1" class="form-label">Año de Lanzamiento</label>
+              <input type="date" class="form-control" id="launch" formControlName="launch">
+              <div
+                *ngIf="formAlbum.launch.invalid && formAlbum.launch.errors && (formAlbum.launch.dirty || formAlbum.launch.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formAlbum.launch.errors.required ">
+                  Required field!
+                </small>
+              </div>
+            </div>
+            <div class="col-12">
+              <label for="exampleInputEmail1" class="form-label">Covertura</label>
+              <input type="text" class="form-control" id="image" formControlName="image">
+              <div
+                *ngIf="formAlbum.image.invalid && formAlbum.image.errors && (formAlbum.image.dirty || formAlbum.image.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formAlbum.image.errors.required ">
+                  Required field!
+                </small>
+              </div>
+            </div>
+            <div style="text-align: right;margin-top: 5px;">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                (click)="cleanFormAlbum()">Close</button>
+              <button type="submit" class="btn btn-primary" style="margin-left: 10px;"
+                data-bs-dismiss="modal">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
