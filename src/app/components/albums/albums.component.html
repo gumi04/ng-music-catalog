@@ -59,7 +59,9 @@
       </div>
     </div>
   </div>
-
+  <div class="col-12" style="text-align: center;margin-top: 20px;" *ngIf="albums.length==0">
+    <p>No cuentas con algun Album, agrega alguno!!</p>
+  </div>
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
