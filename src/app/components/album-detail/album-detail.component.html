@@ -1,0 +1,231 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col">
+      <a title="Regresar" href="#" style="color: white;font-size: 30px;text-align: right;">
+        <i class="fa fa-chevron-circle-left"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column text-center bg-dark text-white">
+  <main class="px-3">
+    <h1>{{album.title}}</h1>
+    <h5>{{album.singer}}</h5>
+    <img [src]="album.image" class="img-thumbnail border-0 rounded-start" alt="..." width="200" height="200">
+    <p class="lead" style="margin-top: 15px;">
+      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregrar Cancion
+        <i class="fa fa-plus-circle fa-lg" style="color: black;"></i>
+      </button>
+      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark" style="margin-left: 10px;" (click)="deletedAllSongs()"*ngIf="songs.length>0">Eliminar canciones
+        <i class="fa fa-trash-o fa-lg" style="color: black;"></i>
+      </button>
+      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark" style="margin-left: 10px;" (click)="enableForm()">Actualizar Autor
+        <i class="fa fa-edit fa-lg" style="color: black;"></i>
+      </button>
+    </p>
+  </main>
+  <div class="container" *ngIf="showForm">
+    <div class="row">
+    <div class="col-lg-3 col-sm-3 col-mb-3 col-0"></div>
+    <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+    <form class="col needs-validation" novalidate (ngSubmit)="updateAuthor(authorForm)" [formGroup]="authorForm">
+      <div class="row">
+        <div class="col-lg-7 col-sm-12 col-mb-7 col-12">
+          <input type="text" class="form-control  bg-dark text-white" id="author" formControlName="author" placeholder="Ingrese el nombre del Autor">
+          <div
+            *ngIf="formAuthor.author.invalid && formAuthor.author.errors && (formAuthor.author.dirty || formAuthor.author.touched)"
+            class="alert alert-danger form-danger" role="alert">
+            <small *ngIf="formAuthor.author.errors.required ">
+              Campo Requerido!
+            </small>
+          </div>
+        </div>
+        <div class="col-lg-5 col-sm-12 col-mb-5 col-12">
+          <button type="button" class="btn btn-outline-secondary"
+          (click)="cleanFormSong()" (click)="enableForm()">Close</button>
+          <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;"
+          data-bs-dismiss="modal" [disabled]="authorForm.invalid">Actualizar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+    <div class="col-lg-3 col-sm-3 col-mb-3 col-0"></div>
+  </div>
+  </div>
+
+  <div class="container" style="margin-top: 23px;">
+    <table class="table text-white">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titulo</th>
+          <th scope="col">Autor</th>
+          <th scope="col">Duracion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let song of songs,index as i">
+          <td>
+            <a class="btn" title="Eliminar"><i class="fa fa-trash-o fa-lg" style="color: white;" (click)="deletSong(song.songId)"></i> </a> {{i+1}}</td>
+          <td>{{song.title}}</td>
+          <td>{{song.author}}</td>
+          <td>{{song.length}}
+            <a class="btn" title="Informacion"><i class="fa fa-info-circle fa-lg" style="color: white;"(click)="getSong(song.songId)" data-bs-toggle="modal" data-bs-target="#modalInfo"></i></a>
+            <a class="btn" title="Editar"><i class="fa fa-edit fa-lg" style="color: white;" (click)="getSong(song.songId)" data-bs-toggle="modal" data-bs-target="#modaledit"></i></a>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="col-12" style="text-align: center;margin-top: 20px;" *ngIf="songs.length==0">
+  <p>No cuentas con ninguna Cancion, agrega alguna!!</p>
+</div>
+
+
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title " id="exampleModalLabel" >Agregar Cancion</h5>
+        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"
+          (click)="cleanFormSong()"></button>
+      </div>
+      <div class="modal-body">
+        <form novalidate (ngSubmit)="create(songForm)" [formGroup]="songForm">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+              <label for="exampleInputEmail1" class="form-label">Titulo</label>
+              <input type="text" class="form-control  bg-dark text-white" id="title" formControlName="title">
+              <div
+                *ngIf="formSong.title.invalid && formSong.title.errors && (formSong.title.dirty || formSong.title.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formSong.title.errors.required ">
+                  Campo Requerido!
+                </small>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+              <label for="exampleInputEmail1" class="form-label">Autor</label>
+              <input type="text" class="form-control  bg-dark text-white" id="author" formControlName="author">
+              <div
+                *ngIf="formSong.author.invalid && formSong.author.errors && (formSong.author.dirty || formSong.author.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formSong.author.errors.required ">
+                  Campo Requerido!
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-3 col-mb- col-0"></div>
+            <div class="col-lg-6 col-sm-6 col-mb- col-12">
+              <label for="exampleInputEmail1" class="form-label">Duracion</label>
+              <input type="text" class="form-control  bg-dark text-white" id="length" formControlName="length">
+              <div
+                *ngIf="formSong.length.invalid && formSong.length.errors && (formSong.length.dirty || formSong.length.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formSong.length.errors.required ">
+                  Campo Requerido!
+                </small>
+                <small *ngIf="formSong.length.errors.pattern ">
+                  solo se acepta el siguiente formato 2.23
+                </small>
+              </div>
+            </div>
+          </div>
+          <div style="text-align: right;margin-top: 20px;">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+              (click)="cleanFormSong()">Close</button>
+            <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;"
+              data-bs-dismiss="modal" [disabled]="songForm.invalid">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="modaledit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title " id="exampleModalLabel" >Agregar Cancion</h5>
+        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"
+          (click)="cleanFormSong()"></button>
+      </div>
+      <div class="modal-body">
+        <form novalidate (ngSubmit)="updateSong(songForm)" [formGroup]="songForm">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+              <label for="exampleInputEmail1" class="form-label">Titulo</label>
+              <input type="text" class="form-control  bg-dark text-white" id="title" formControlName="title">
+              <div
+                *ngIf="formSong.title.invalid && formSong.title.errors && (formSong.title.dirty || formSong.title.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formSong.title.errors.required ">
+                  Campo Requerido!
+                </small>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+              <label for="exampleInputEmail1" class="form-label">Autor</label>
+              <input type="text" class="form-control  bg-dark text-white" id="author" formControlName="author">
+              <div
+                *ngIf="formSong.author.invalid && formSong.author.errors && (formSong.author.dirty || formSong.author.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formSong.author.errors.required ">
+                  Campo Requerido!
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-sm-3 col-mb- col-0"></div>
+            <div class="col-lg-6 col-sm-6 col-mb- col-12">
+              <label for="exampleInputEmail1" class="form-label">Duracion</label>
+              <input type="text" class="form-control  bg-dark text-white" id="length" formControlName="length">
+              <div
+                *ngIf="formSong.length.invalid && formSong.length.errors && (formSong.length.dirty || formSong.length.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formSong.length.errors.required ">
+                  Campo Requerido!
+                </small>
+                <small *ngIf="formSong.length.errors.pattern ">
+                  solo se acepta el siguiente formato 2.23
+                </small>
+              </div>
+            </div>
+          </div>
+          <div style="text-align: right;margin-top: 20px;">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+              (click)="cleanFormSong()">Close</button>
+            <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;"
+              data-bs-dismiss="modal" [disabled]="songForm.invalid">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade " id="modalInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title " id="exampleModalLabel" >Informacion Detalla</h5>
+        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+          <p>Titulo {{song.title}}</p>
+          <p>Autor {{song.author}}</p>
+          <p>Duracion {{song.length}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+

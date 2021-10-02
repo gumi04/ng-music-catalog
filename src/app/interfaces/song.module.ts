@@ -3,5 +3,5 @@ export interface Song{
   title: string,
   albumId: number,
   author: string,
-  lenght: number
+  length: number
 }

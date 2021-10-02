@@ -9,21 +9,24 @@ import {HttpClientModule} from '@angular/common/http';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NewAlbumComponent } from './components/new-album/new-album.component';
-
+import { AlbumDetailComponent } from './components/album-detail/album-detail.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     NavbarComponent,
     AlbumsComponent,
-    NewAlbumComponent
+    NewAlbumComponent,
+    AlbumDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
