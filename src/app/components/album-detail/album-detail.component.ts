@@ -16,8 +16,8 @@ export class AlbumDetailComponent implements OnInit {
 
 
 
-  idAlbum:any=0;
-  songs:Song[]=[];
+  idAlbum: any = 0;
+  songs: Song[] = [];
   album: Album = {
     albumId: 0,
     title: '',
@@ -27,25 +27,25 @@ export class AlbumDetailComponent implements OnInit {
     gender: '',
     image: ''
   };
-  song: Song={
+  song: Song = {
     songId: 0,
-  title: '',
-  albumId: 0,
-  author: '',
-  length: 0
+    title: '',
+    albumId: 0,
+    author: '',
+    length: 0
   }
-  showForm:boolean=false;
+  showForm: boolean = false;
   songForm: FormGroup;
   authorForm: FormGroup;
-  constructor(private route:ActivatedRoute, private songService:SongService,private albumService:AlbumService) {
-    this.idAlbum= this.route.snapshot.paramMap.get('id');
+  constructor(private route: ActivatedRoute, private songService: SongService, private albumService: AlbumService) {
+    this.idAlbum = this.route.snapshot.paramMap.get('id');
     this.songForm = new FormGroup({
-      title: new FormControl('',Validators.required),
-      author: new FormControl('',Validators.required),
-      length: new FormControl('',[Validators.required,Validators.pattern('^[0-9]{1,2}[.][0-9]{1,2}\d*?$')])
+      title: new FormControl('', Validators.required),
+      author: new FormControl('', Validators.required),
+      length: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{1,2}[.][0-9]{1,2}\d*?$')])
     })
-    this.authorForm= new FormGroup({
-      author: new FormControl('',Validators.required)
+    this.authorForm = new FormGroup({
+      author: new FormControl('', Validators.required)
     })
 
   }
@@ -63,19 +63,19 @@ export class AlbumDetailComponent implements OnInit {
     })
   }
 
-  getAlbum(){
-    this.albumService.getAlbum(this.idAlbum).then(result=>{
-      this.album=result as Album;
+  getAlbum() {
+    this.albumService.getAlbum(this.idAlbum).then(result => {
+      this.album = result as Album;
 
-    }).catch(error=>{
+    }).catch(error => {
       console.log(error)
     })
   }
-  getSong(idSong:number){
-    this.songService.getSong(idSong,this.idAlbum).then(result=>{
-      this.song=result as Song;
+  getSong(idSong: number) {
+    this.songService.getSong(idSong, this.idAlbum).then(result => {
+      this.song = result as Song;
       this.formData();
-    }).catch(error=>{
+    }).catch(error => {
       console.log(error)
     })
   }
@@ -83,7 +83,7 @@ export class AlbumDetailComponent implements OnInit {
 
     this.song.author = value.author;
     if (valid) {
-      this.songService.updateAuthorMassive(this.song,this.idAlbum).then(result => {
+      this.songService.updateAuthorMassive(this.song, this.idAlbum).then(result => {
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -93,7 +93,7 @@ export class AlbumDetailComponent implements OnInit {
         })
         this.authorForm.reset();
         this.getAllSongsByAlbums();
-        this.showForm= !this.showForm
+        this.showForm = !this.showForm
       }).catch(error => {
         Swal.fire({
           position: 'center',
@@ -108,7 +108,7 @@ export class AlbumDetailComponent implements OnInit {
 
   create({ value, valid }: { value: Song, valid: boolean }) {
     if (valid) {
-      this.songService.createSong(value,this.idAlbum).then(result=>{
+      this.songService.createSong(value, this.idAlbum).then(result => {
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -118,7 +118,7 @@ export class AlbumDetailComponent implements OnInit {
         })
         this.songForm.reset()
         this.getAllSongsByAlbums()
-      }).catch(errror=>{
+      }).catch(errror => {
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -132,8 +132,8 @@ export class AlbumDetailComponent implements OnInit {
 
 
   updateSong({ value, valid }: { value: Song, valid: boolean }) {
-    if(valid){
-      this.songService.updateSong(value,this.idAlbum,this.song.songId).then(result=>{
+    if (valid) {
+      this.songService.updateSong(value, this.idAlbum, this.song.songId).then(result => {
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -143,7 +143,7 @@ export class AlbumDetailComponent implements OnInit {
         })
         this.songForm.reset()
         this.getAllSongsByAlbums()
-      }).catch(error=>{
+      }).catch(error => {
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -155,7 +155,7 @@ export class AlbumDetailComponent implements OnInit {
     }
   }
 
-  deletSong(idSong:number){
+  deletSong(idSong: number) {
     Swal.fire({
       title: '¿Estas Seguro?',
       icon: 'warning',
@@ -166,7 +166,7 @@ export class AlbumDetailComponent implements OnInit {
       confirmButtonText: 'Yes'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.songService.deleteSong(this.idAlbum,idSong).then(result=>{
+        this.songService.deleteSong(this.idAlbum, idSong).then(result => {
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -175,7 +175,7 @@ export class AlbumDetailComponent implements OnInit {
             timer: 1500
           })
           this.getAllSongsByAlbums();
-        }).catch(error=>{
+        }).catch(error => {
           Swal.fire({
             position: 'center',
             icon: 'warning',
@@ -189,7 +189,7 @@ export class AlbumDetailComponent implements OnInit {
     })
   }
 
-  deletedAllSongs(){
+  deletedAllSongs() {
     Swal.fire({
       title: '¿Estas Seguro?',
       icon: 'warning',
@@ -200,7 +200,7 @@ export class AlbumDetailComponent implements OnInit {
       confirmButtonText: 'Yes'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.songService.deleteAllSongs(this.idAlbum).then(result=>{
+        this.songService.deleteAllSongs(this.idAlbum).then(result => {
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -209,7 +209,7 @@ export class AlbumDetailComponent implements OnInit {
             timer: 1500
           })
           this.getAllSongsByAlbums();
-        }).catch(error=>{
+        }).catch(error => {
           Swal.fire({
             position: 'center',
             icon: 'warning',
@@ -231,18 +231,18 @@ export class AlbumDetailComponent implements OnInit {
     })
   }
 
-get formSong(): any{
+  get formSong(): any {
     return this.songForm['controls']
   }
   cleanFormSong() {
     this.songForm.reset();
   }
 
-enableForm(){
-  this.showForm=!this.showForm;
-}
+  enableForm() {
+    this.showForm = !this.showForm;
+  }
 
-get formAuthor(): any{
-  return this.authorForm['controls']
-}
+  get formAuthor(): any {
+    return this.authorForm['controls']
+  }
 }

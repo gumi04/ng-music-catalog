@@ -14,44 +14,48 @@
     <h5>{{album.singer}}</h5>
     <img [src]="album.image" class="img-thumbnail border-0 rounded-start" alt="..." width="200" height="200">
     <p class="lead" style="margin-top: 15px;">
-      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregrar Cancion
+      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark"
+        data-bs-toggle="modal" data-bs-target="#exampleModal">Agregrar Cancion
         <i class="fa fa-plus-circle fa-lg" style="color: black;"></i>
       </button>
-      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark" style="margin-left: 10px;" (click)="deletedAllSongs()"*ngIf="songs.length>0">Eliminar canciones
+      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark"
+        style="margin-left: 10px;" (click)="deletedAllSongs()" *ngIf="songs.length>0">Eliminar canciones
         <i class="fa fa-trash-o fa-lg" style="color: black;"></i>
       </button>
-      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark" style="margin-left: 10px;" (click)="enableForm()">Actualizar Autor
+      <button href="#" class="btn btn-lg btn-secondary btn-sm fw-bold border-white bg-white text-dark"
+        style="margin-left: 10px;" (click)="enableForm()">Actualizar Autor
         <i class="fa fa-edit fa-lg" style="color: black;"></i>
       </button>
     </p>
   </main>
   <div class="container" *ngIf="showForm">
     <div class="row">
-    <div class="col-lg-3 col-sm-3 col-mb-3 col-0"></div>
-    <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
-    <form class="col needs-validation" novalidate (ngSubmit)="updateAuthor(authorForm)" [formGroup]="authorForm">
-      <div class="row">
-        <div class="col-lg-7 col-sm-12 col-mb-7 col-12">
-          <input type="text" class="form-control  bg-dark text-white" id="author" formControlName="author" placeholder="Ingrese el nombre del Autor">
-          <div
-            *ngIf="formAuthor.author.invalid && formAuthor.author.errors && (formAuthor.author.dirty || formAuthor.author.touched)"
-            class="alert alert-danger form-danger" role="alert">
-            <small *ngIf="formAuthor.author.errors.required ">
-              Campo Requerido!
-            </small>
+      <div class="col-lg-3 col-sm-3 col-mb-3 col-0"></div>
+      <div class="col-lg-6 col-sm-6 col-mb-6 col-12">
+        <form class="col needs-validation" novalidate (ngSubmit)="updateAuthor(authorForm)" [formGroup]="authorForm">
+          <div class="row">
+            <div class="col-lg-7 col-sm-12 col-mb-7 col-12">
+              <input type="text" class="form-control  bg-dark text-white" id="author" formControlName="author"
+                placeholder="Ingrese el nombre del Autor">
+              <div
+                *ngIf="formAuthor.author.invalid && formAuthor.author.errors && (formAuthor.author.dirty || formAuthor.author.touched)"
+                class="alert alert-danger form-danger" role="alert">
+                <small *ngIf="formAuthor.author.errors.required ">
+                  Campo Requerido!
+                </small>
+              </div>
+            </div>
+            <div class="col-lg-5 col-sm-12 col-mb-5 col-12">
+              <button type="button" class="btn btn-outline-secondary" (click)="cleanFormSong()"
+                (click)="enableForm()">Close</button>
+              <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;" data-bs-dismiss="modal"
+                [disabled]="authorForm.invalid">Actualizar</button>
+            </div>
           </div>
-        </div>
-        <div class="col-lg-5 col-sm-12 col-mb-5 col-12">
-          <button type="button" class="btn btn-outline-secondary"
-          (click)="cleanFormSong()" (click)="enableForm()">Close</button>
-          <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;"
-          data-bs-dismiss="modal" [disabled]="authorForm.invalid">Actualizar</button>
-        </div>
+        </form>
       </div>
-    </form>
-  </div>
-    <div class="col-lg-3 col-sm-3 col-mb-3 col-0"></div>
-  </div>
+      <div class="col-lg-3 col-sm-3 col-mb-3 col-0"></div>
+    </div>
   </div>
 
   <div class="container" style="margin-top: 23px;">
@@ -67,12 +71,16 @@
       <tbody>
         <tr *ngFor="let song of songs,index as i">
           <td>
-            <a class="btn" title="Eliminar"><i class="fa fa-trash-o fa-lg" style="color: white;" (click)="deletSong(song.songId)"></i> </a> {{i+1}}</td>
+            <a class="btn" title="Eliminar"><i class="fa fa-trash-o fa-lg" style="color: white;"
+                (click)="deletSong(song.songId)"></i> </a> {{i+1}}
+          </td>
           <td>{{song.title}}</td>
           <td>{{song.author}}</td>
           <td>{{song.length}}
-            <a class="btn" title="Informacion"><i class="fa fa-info-circle fa-lg" style="color: white;"(click)="getSong(song.songId)" data-bs-toggle="modal" data-bs-target="#modalInfo"></i></a>
-            <a class="btn" title="Editar"><i class="fa fa-edit fa-lg" style="color: white;" (click)="getSong(song.songId)" data-bs-toggle="modal" data-bs-target="#modaledit"></i></a>
+            <a class="btn" title="Informacion"><i class="fa fa-info-circle fa-lg" style="color: white;"
+                (click)="getSong(song.songId)" data-bs-toggle="modal" data-bs-target="#modalInfo"></i></a>
+            <a class="btn" title="Editar"><i class="fa fa-edit fa-lg" style="color: white;"
+                (click)="getSong(song.songId)" data-bs-toggle="modal" data-bs-target="#modaledit"></i></a>
           </td>
 
         </tr>
@@ -89,7 +97,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header bg-dark text-white">
-        <h5 class="modal-title " id="exampleModalLabel" >Agregar Cancion</h5>
+        <h5 class="modal-title " id="exampleModalLabel">Agregar Cancion</h5>
         <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"
           (click)="cleanFormSong()"></button>
       </div>
@@ -139,8 +147,8 @@
           <div style="text-align: right;margin-top: 20px;">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
               (click)="cleanFormSong()">Close</button>
-            <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;"
-              data-bs-dismiss="modal" [disabled]="songForm.invalid">Submit</button>
+            <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;" data-bs-dismiss="modal"
+              [disabled]="songForm.invalid">Submit</button>
           </div>
         </form>
       </div>
@@ -152,7 +160,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header bg-dark text-white">
-        <h5 class="modal-title " id="exampleModalLabel" >Agregar Cancion</h5>
+        <h5 class="modal-title " id="exampleModalLabel">Agregar Cancion</h5>
         <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"
           (click)="cleanFormSong()"></button>
       </div>
@@ -202,8 +210,8 @@
           <div style="text-align: right;margin-top: 20px;">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
               (click)="cleanFormSong()">Close</button>
-            <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;"
-              data-bs-dismiss="modal" [disabled]="songForm.invalid">Submit</button>
+            <button type="submit" class="btn  btn-outline-success" style="margin-left: 10px;" data-bs-dismiss="modal"
+              [disabled]="songForm.invalid">Submit</button>
           </div>
         </form>
       </div>
@@ -216,16 +224,14 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header bg-dark text-white">
-        <h5 class="modal-title " id="exampleModalLabel" >Informacion Detalla</h5>
+        <h5 class="modal-title " id="exampleModalLabel">Informacion Detalla</h5>
         <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-center">
-          <p>Titulo {{song.title}}</p>
-          <p>Autor {{song.author}}</p>
-          <p>Duracion {{song.length}}</p>
+        <p>Titulo {{song.title}}</p>
+        <p>Autor {{song.author}}</p>
+        <p>Duracion {{song.length}}</p>
       </div>
     </div>
   </div>
 </div>
-
-

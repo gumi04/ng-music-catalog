@@ -2,10 +2,12 @@
 
   <div class="row">
     <div class="col" style="text-align: right;margin-top: 10px;">
-      <a class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregrar Album
+      <a class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">Agregrar Album
         <i class="fa fa-plus-circle fa-lg" style="color: black;"></i>
       </a>
-      <a class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" style="margin-left: 5px;" (click)="deletedAllAlbums()" *ngIf="albums.length>0">Eliminar Albums
+      <a class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" style="margin-left: 5px;"
+        (click)="deletedAllAlbums()" *ngIf="albums.length>0">Eliminar Albums
         <i class="fa fa-trash-o fa-lg" style="color: black;"></i></a>
     </div>
     <form class="row g-3 needs-validation" novalidate (ngSubmit)="updateCompanyMassive(companyAlbumForm)"
@@ -13,8 +15,8 @@
       <div class="col-lg-3 col-sm-3 col-mb-3 col-0">
       </div>
       <div class="col-lg-3 col-sm-6 col-mb-3 col-6">
-        <input type="text" class="form-control bg-dark text-white" id="validationCustom01" required placeholder="Compañia"
-          formControlName="companyName" ngModel>
+        <input type="text" class="form-control bg-dark text-white" id="validationCustom01" required
+          placeholder="Compañia" formControlName="companyName" ngModel>
         <div
           *ngIf="formAltaControls.companyName.invalid && formAltaControls.companyName.errors && (formAltaControls.companyName.dirty || formAltaControls.companyName.touched)"
           class="alert alert-danger form-danger" role="alert">
@@ -24,33 +26,38 @@
         </div>
       </div>
       <div class="col-lg-3 col-sm-3 col-mb-3 col-3">
-        <button class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" [disabled]="companyAlbumForm.invalid" type="submit">Actualizar</button>
+        <button class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" [disabled]="companyAlbumForm.invalid"
+          type="submit">Actualizar</button>
       </div>
     </form>
   </div>
 
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="margin-top: 10px;">
     <div class="col" *ngFor="let album of albums,index as i">
-      <div class="card shadow-sm text-white" >
+      <div class="card shadow-sm text-white">
         <div style="display: inline-block;position: relative;">
           <img class="bd-placeholder-img card-img-top" width="100%" height="225" [src]="album.image" role="img"
             aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-          <button type="button" class="btn " aria-label="Close" style="position: absolute;right: 0px;" (click)="deleteAlbum(album.albumId)"><i class="fa fa-trash-o fa-lg" style="color: red;"></i></button>
+          <button type="button" class="btn " aria-label="Close" style="position: absolute;right: 0px;"
+            (click)="deleteAlbum(album.albumId)"><i class="fa fa-trash-o fa-lg" style="color: red;"></i></button>
         </div>
 
         <div class="card-body text-white" style="background: rgb(52, 52, 54);">
           <h5 class="card-title text-white">{{album.title}}</h5>
           <h6 class="card-subtitle mb-2 ">{{album.singer}}</h6>
-          <ul class="list-group list-group-flush text-white" >
+          <ul class="list-group list-group-flush text-white">
             <li class="list-group-item text-white" style="background: rgb(52, 52, 54);">Genero {{album.gender}}</li>
             <li class="list-group-item text-white" style="background: rgb(52, 52, 54);"> Disquera {{album.company}}</li>
           </ul>
           <div class="d-flex justify-content-between align-items-center" style="text-align: right;">
             <div class="btn-group">
               <div class="col" style="text-align: right;">
-                <button type="button" class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" [routerLink]="['/album/detail/',album.albumId]">Detalles</button>
-                <button type="button" title="Editar" (click)="getAlbum(album.albumId)" class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" data-bs-toggle="modal" style="margin-left: 10px;"
-                  data-bs-target="#modaledit"><i class="fa fa-edit fa-lg" style="color: black;"></i></button>
+                <button type="button" class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark"
+                  [routerLink]="['/album/detail/',album.albumId]">Detalles</button>
+                <button type="button" title="Editar" (click)="getAlbum(album.albumId)"
+                  class="btn btn-sm fw-bold border-white btn-sm bg-white text-dark" data-bs-toggle="modal"
+                  style="margin-left: 10px;" data-bs-target="#modaledit"><i class="fa fa-edit fa-lg"
+                    style="color: black;"></i></button>
               </div>
             </div>
           </div>
@@ -150,8 +157,8 @@
             <div style="text-align: right;margin-top: 5px;">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                 (click)="cleanFormAlbum()">Close</button>
-              <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px;"
-                data-bs-dismiss="modal" [disabled]="albumForm.invalid">Submit</button>
+              <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px;" data-bs-dismiss="modal"
+                [disabled]="albumForm.invalid">Submit</button>
             </div>
           </form>
         </div>
@@ -244,12 +251,11 @@
             <div style="text-align: right;margin-top: 5px;">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                 (click)="cleanFormAlbum()">Close</button>
-              <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px;"
-                data-bs-dismiss="modal" [disabled]="albumForm.invalid">Submit</button>
+              <button type="submit" class="btn btn-outline-primary" style="margin-left: 10px;" data-bs-dismiss="modal"
+                [disabled]="albumForm.invalid">Submit</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-

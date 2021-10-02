@@ -22,7 +22,7 @@ export class AlbumsComponent implements OnInit {
     gender: '',
     image: ''
   };
-  idAlbum:number=0;
+  idAlbum: number = 0;
   companyAlbumForm: FormGroup;
   albumForm: FormGroup;
 
@@ -82,9 +82,9 @@ export class AlbumsComponent implements OnInit {
 
 
   create({ value, valid }: { value: Album, valid: boolean }) {
-    value.launch=this.getformaterDate(value.launch);
+    value.launch = this.getformaterDate(value.launch);
     if (valid) {
-      this.albumService.createAlbum(value).then(result=>{
+      this.albumService.createAlbum(value).then(result => {
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -94,7 +94,7 @@ export class AlbumsComponent implements OnInit {
         })
         this.albumForm.reset()
         this.getAllAlbums()
-      }).catch(errror=>{
+      }).catch(errror => {
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -106,7 +106,7 @@ export class AlbumsComponent implements OnInit {
     }
   }
 
-  deleteAlbum(id:number){
+  deleteAlbum(id: number) {
     Swal.fire({
       title: '¿Estas Seguro?',
       icon: 'warning',
@@ -117,7 +117,7 @@ export class AlbumsComponent implements OnInit {
       confirmButtonText: 'Yes'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.albumService.deleteAlbum(id).then(result=>{
+        this.albumService.deleteAlbum(id).then(result => {
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -126,7 +126,7 @@ export class AlbumsComponent implements OnInit {
             timer: 1500
           })
           this.getAllAlbums();
-        }).catch(error=>{
+        }).catch(error => {
           Swal.fire({
             position: 'center',
             icon: 'warning',
@@ -140,19 +140,19 @@ export class AlbumsComponent implements OnInit {
     })
   }
 
-  getAlbum(id:number){
-    this.albumService.getAlbum(id).then(result=>{
-      this.album=result as Album;
-      this.idAlbum=id;
+  getAlbum(id: number) {
+    this.albumService.getAlbum(id).then(result => {
+      this.album = result as Album;
+      this.idAlbum = id;
       this.formData();
-    }).catch(error=>{
+    }).catch(error => {
       console.log(error)
     })
   }
   update({ value, valid }: { value: Album, valid: boolean }) {
-    value.launch=this.getformaterDate(value.launch);
-    value.albumId=this.idAlbum;
-    this.albumService.updateAlbum(value,this.idAlbum).then(result=>{
+    value.launch = this.getformaterDate(value.launch);
+    value.albumId = this.idAlbum;
+    this.albumService.updateAlbum(value, this.idAlbum).then(result => {
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -162,7 +162,7 @@ export class AlbumsComponent implements OnInit {
       })
       this.albumForm.reset()
       this.getAllAlbums()
-    }).catch(error=>{
+    }).catch(error => {
       Swal.fire({
         position: 'center',
         icon: 'error',
@@ -173,7 +173,7 @@ export class AlbumsComponent implements OnInit {
     })
   }
 
-  deletedAllAlbums(){
+  deletedAllAlbums() {
     Swal.fire({
       title: '¿Estas Seguro?',
       icon: 'warning',
@@ -184,7 +184,7 @@ export class AlbumsComponent implements OnInit {
       confirmButtonText: 'Yes'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.albumService.deleteAllAlbums().then(result=>{
+        this.albumService.deleteAllAlbums().then(result => {
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -193,7 +193,7 @@ export class AlbumsComponent implements OnInit {
             timer: 1500
           })
           this.getAllAlbums();
-        }).catch(error=>{
+        }).catch(error => {
           Swal.fire({
             position: 'center',
             icon: 'warning',
@@ -207,21 +207,21 @@ export class AlbumsComponent implements OnInit {
     })
   }
 
-  getformaterDate(date:Date){
+  getformaterDate(date: Date) {
     const datePipe = new DatePipe('en-US')
-    return datePipe.transform(date,"yyyy-MM-ddTHH:mm:ss");
+    return datePipe.transform(date, "yyyy-MM-ddTHH:mm:ss");
   }
 
-  getformaterDateForm(date:Date){
+  getformaterDateForm(date: Date) {
     const datePipe = new DatePipe('en-US')
-    return datePipe.transform(date,"yyyy-MM-dd");
+    return datePipe.transform(date, "yyyy-MM-dd");
   }
 
   get formAltaControls(): any {
     return this.companyAlbumForm['controls']
   }
 
-  get formAlbum(): any{
+  get formAlbum(): any {
     return this.albumForm['controls']
   }
 
@@ -230,7 +230,7 @@ export class AlbumsComponent implements OnInit {
   }
 
   formData() {
-    let date= this.getformaterDateForm(this.album.launch)
+    let date = this.getformaterDateForm(this.album.launch)
     this.albumForm.setValue({
       title: this.album.title,
       launch: date,

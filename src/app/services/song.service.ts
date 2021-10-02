@@ -9,76 +9,76 @@ import { Song } from '../interfaces/song.module';
 export class SongService {
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json'
+      'Content-Type': 'application/json'
     })
   };
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getSongsByAlbum(idAlbum:number){
-    return new Promise<Song[]>((resolve,reject)=>{
-      this.http.get(environment.url_base_api+"albums/"+idAlbum+"/songs").subscribe((result:any)=>{
+  getSongsByAlbum(idAlbum: number) {
+    return new Promise<Song[]>((resolve, reject) => {
+      this.http.get(environment.url_base_api + "albums/" + idAlbum + "/songs").subscribe((result: any) => {
         resolve(result)
-      },err=>{
+      }, err => {
         reject(err)
       })
     })
   }
 
-  createSong(song:Song,idAlbum:number){
-    return new Promise((resolve,reject)=>{
-      this.http.post(environment.url_base_api+"albums/"+idAlbum+"/songs",song,this.httpOptions).subscribe((result:any)=>{
+  createSong(song: Song, idAlbum: number) {
+    return new Promise((resolve, reject) => {
+      this.http.post(environment.url_base_api + "albums/" + idAlbum + "/songs", song, this.httpOptions).subscribe((result: any) => {
         resolve(result)
-      },error=>{
+      }, error => {
         reject(error)
       })
     })
   }
 
-  updateAuthorMassive(song:Song,idAlbum:number){
-    return new Promise((resolve,reject)=>{
-      this.http.put(environment.url_base_api+"albums/"+idAlbum+"/songs",song,this.httpOptions).subscribe((result:any)=>{
+  updateAuthorMassive(song: Song, idAlbum: number) {
+    return new Promise((resolve, reject) => {
+      this.http.put(environment.url_base_api + "albums/" + idAlbum + "/songs", song, this.httpOptions).subscribe((result: any) => {
         resolve(result)
-      },err=>{
+      }, err => {
         reject(err)
       })
     })
   }
 
-  getSong(idSong:number,idAlbum:number){
-    return new Promise((resolve,reject)=>{
-      this.http.get(environment.url_base_api+"albums/"+idAlbum+"/songs/"+idSong).subscribe((result:any)=>{
+  getSong(idSong: number, idAlbum: number) {
+    return new Promise((resolve, reject) => {
+      this.http.get(environment.url_base_api + "albums/" + idAlbum + "/songs/" + idSong).subscribe((result: any) => {
         resolve(result)
-      },error=>{
+      }, error => {
         reject(error)
       })
     })
   }
 
-  updateSong(song:Song,idAlbum:number,idSong:number){
-    return new Promise((resolve,reject)=>{
-      this.http.put(environment.url_base_api+"albums/"+idAlbum+"/songs/"+idSong,song,this.httpOptions).subscribe((result:any)=>{
+  updateSong(song: Song, idAlbum: number, idSong: number) {
+    return new Promise((resolve, reject) => {
+      this.http.put(environment.url_base_api + "albums/" + idAlbum + "/songs/" + idSong, song, this.httpOptions).subscribe((result: any) => {
         resolve(result)
-      },error=>{
+      }, error => {
         reject(error)
       })
     })
   }
 
-  deleteSong(idAlbum:number,idSong:number){
-    return new Promise((resolve,reject)=>{
-      this.http.delete(environment.url_base_api+"albums/"+idAlbum+"/songs/"+idSong).subscribe((result:any)=>{
+  deleteSong(idAlbum: number, idSong: number) {
+    return new Promise((resolve, reject) => {
+      this.http.delete(environment.url_base_api + "albums/" + idAlbum + "/songs/" + idSong).subscribe((result: any) => {
         resolve(result)
-      },error=>{
+      }, error => {
         reject(error)
       })
     })
   }
 
-  deleteAllSongs(idAlbum:number){
-    return new Promise((resolve,reject)=>{
-      this.http.delete(environment.url_base_api+"albums/"+idAlbum+"/songs").subscribe((result:any)=>{
+  deleteAllSongs(idAlbum: number) {
+    return new Promise((resolve, reject) => {
+      this.http.delete(environment.url_base_api + "albums/" + idAlbum + "/songs").subscribe((result: any) => {
         resolve(result)
-      },error=>{
+      }, error => {
         reject(error)
       })
     })
